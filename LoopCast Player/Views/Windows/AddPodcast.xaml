@@ -1,0 +1,14 @@
+﻿<Window x:Class="LoopCast_Player.Views.Windows.AddPodcast"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LoopCast_Player.Views.Windows"
+        mc:Ignorable="d"
+        Title="Add Podcast" Height="200" Width="300">
+        <StackPanel>
+            <TextBox Name="URL" Margin="10" VerticalAlignment="Stretch"></TextBox>
+            
+            <Button Content="Add" Margin="10" VerticalAlignment="Bottom" Click="Add"></Button>
+        </StackPanel>
+</Window>

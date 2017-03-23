@@ -1,0 +1,29 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LoopCast_Player.Views.Pages"
+      xmlns:Controls="clr-namespace:LoopCast_Player.Views.Controls" x:Class="LoopCast_Player.Views.Pages.PlayerPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="PlayerPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Podcast selection -->
+        <ComboBox Name="EpisodeSelection" Height="25" Margin="10" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top"/>
+        <Button Name="ChangePodcast" Grid.Row="0" Grid.Column="1" Margin="10" Content="Change" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ChangePodcast_Click"></Button>
+
+
+        <Controls:Player x:Name="Player" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"/>
+    </Grid>
+</Page>
