@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using LoopCast_Player.Model;
-using LoopCast_Player.Views.Windows;
 
 namespace LoopCast_Player.Views.Controls
 {
@@ -26,11 +24,15 @@ namespace LoopCast_Player.Views.Controls
         public void SetPodcast(Podcast podcast)
         {
             _elapsedTimer?.Stop();
+            PlayPause.IsEnabled = false;
             try
             {
-                podcast?.Stop();
+                _currentPodcast?.Stop();
             }
             catch { }
+            _currentPodcast = null;
+            PlayPause.IsEnabled = true;
+
             FileName.Content = "Loading stream...";
 
             Task t = new Task(() =>
@@ -87,7 +89,10 @@ namespace LoopCast_Player.Views.Controls
 
         private void UpdatePlayTime(object sender, EventArgs args)
         {
-            Time.Content = $"{_currentPodcast?.CurrentTime}/{_length}";
+            if (_currentPodcast == null)
+                return;
+            Time.Content = $"{_currentPodcast.CurrentTime}/{_length}";
+            Elapsed.Value = _currentPodcast.PercentElapsed;
         }
     }
 }

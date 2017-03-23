@@ -23,7 +23,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ProgressBar Grid.Row="0" Margin="10" Height="10"></ProgressBar>
+            <ProgressBar Name="Elapsed" Grid.Row="0" Margin="10" Height="10"></ProgressBar>
 
             <Grid Grid.Row="1">
                 <Button Name="Rewind" Content="Rewind" Margin="10" HorizontalAlignment="Left" Height="25" Click="ReverseTime"></Button>

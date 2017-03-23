@@ -91,6 +91,7 @@ namespace LoopCast_Player.Model
 
         public TimeSpan Length => _waveStream.TotalTime;
         public TimeSpan CurrentTime => TimeSpan.FromSeconds(Math.Floor(_waveStream.CurrentTime.TotalSeconds));
+        public double PercentElapsed => (CurrentTime.TotalSeconds * 100.0) / Length.TotalSeconds;
 
         public override string ToString()
         {

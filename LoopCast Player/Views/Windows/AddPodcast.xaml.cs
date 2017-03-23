@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Security.Policy;
 using System.Windows;
-using LoopCast_Player.Model;
 
 namespace LoopCast_Player.Views.Windows
 {
