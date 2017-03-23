@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using LoopCast_Player.Model;
+using LoopCast_Player.Views.Windows;
 
 namespace LoopCast_Player.Views.Controls
 {
@@ -17,11 +20,29 @@ namespace LoopCast_Player.Views.Controls
 
         public void SetPodcast(Podcast podcast)
         {
-            podcast.ConnectStream();
-            podcast.StartPlayer();
+            try
+            {
+                podcast?.Stop();
+            }
+            catch { }
+            Notification notification = new Notification("Downloading episode");
 
-            FileName.Content = podcast.Name;
-            _currentPodcast = podcast;
+            Task t = new Task(() =>
+            {
+                podcast.ConnectStream();
+                podcast.StartPlayer();
+            });
+
+            t.GetAwaiter().OnCompleted(() =>
+            {
+                FileName.Content = podcast.Name;
+                _currentPodcast = podcast;
+
+                if (!notification.Closed)
+                    notification.Close();
+                _currentPodcast.Play();
+            });
+            t.Start();
         }
 
         public Player(Podcast podcast) : this()
