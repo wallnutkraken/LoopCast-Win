@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <!-- Podcast selection -->
-        <ComboBox Name="EpisodeSelection" Height="25" Margin="10" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top"/>
+        <ComboBox Name="EpisodeSelection" SelectionChanged="EpisodeChanged" Height="25" Margin="10" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top"/>
         <Button Name="ChangePodcast" Grid.Row="0" Grid.Column="1" Margin="10" Content="Change" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ChangePodcast_Click"></Button>
 
 

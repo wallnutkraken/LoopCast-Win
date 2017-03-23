@@ -23,11 +23,11 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ProgressBar Grid.Row="0" Margin="10"></ProgressBar>
+            <ProgressBar Grid.Row="0" Margin="10" Height="10"></ProgressBar>
 
             <Grid Grid.Row="1">
                 <Button Name="Rewind" Content="Rewind" Margin="10" HorizontalAlignment="Left" Height="25"></Button>
-                <Button Name="PlayPause" Content="Play/Pause" Margin="10" HorizontalAlignment="Center" Height="25"></Button>
+                <Button Name="PlayPause" Content="Play/Pause" Margin="10" HorizontalAlignment="Center" Height="25" Click="PlayPause_Click"></Button>
                 <Button Name="Forward" Content="Forward" Margin="10" HorizontalAlignment="Right" Height="25"></Button>
             </Grid>
         </Grid>

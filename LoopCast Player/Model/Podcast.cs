@@ -23,6 +23,8 @@ namespace LoopCast_Player.Model
             Name = name;
         }
 
+        public bool IsPlaying => _player?.PlaybackState == PlaybackState.Playing;
+
         public void ConnectStream()
         {
             /* Upgrade later: http://mark-dot-net.blogspot.dk/2011/05/how-to-play-back-streaming-mp3-using.html */

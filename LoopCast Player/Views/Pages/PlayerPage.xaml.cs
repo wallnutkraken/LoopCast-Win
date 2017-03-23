@@ -35,5 +35,14 @@ namespace LoopCast_Player.Views.Pages
                 }
             };
         }
+
+        private void EpisodeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            object selected = (sender as ComboBox)?.SelectedItem;
+            if (selected != null)
+            {
+                Player.SetPodcast((Podcast)selected);
+            }
+        }
     }
 }
