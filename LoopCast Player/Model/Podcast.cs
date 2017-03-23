@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using LoopCast_Player.Model.Exceptions;
+using NAudio.Wave;
 
 namespace LoopCast_Player.Model
 {
@@ -13,6 +14,8 @@ namespace LoopCast_Player.Model
         public string Name { get; }
 
         private Stream _stream;
+        private IWavePlayer _player;
+        private WaveStream _waveStream;
 
         public Podcast(string fileURL, string name)
         {
@@ -22,9 +25,22 @@ namespace LoopCast_Player.Model
 
         public void ConnectStream()
         {
+            /* Upgrade later: http://mark-dot-net.blogspot.dk/2011/05/how-to-play-back-streaming-mp3-using.html */
             WebRequest req = WebRequest.Create(URL);
             using (WebResponse response = req.GetResponse())
-                _stream = response.GetResponseStream();
+            {
+                _stream = new MemoryStream();
+                using (Stream stream = response.GetResponseStream())
+                {
+                    byte[] buffer = new byte[32768];
+                    int read;
+                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        _stream.Write(buffer, 0, read);
+                    }
+                }
+            }
+            _stream.Position = 0;
         }
 
         public void StartPlayer()
@@ -32,8 +48,31 @@ namespace LoopCast_Player.Model
             if (_stream == null)
                 throw new FileNotLoadedException();
 
-            throw new NotImplementedException();
+            _player = new WaveOut();
+            _waveStream = new BlockAlignReductionStream(WaveFormatConversionStream.CreatePcmStream(new Mp3FileReader(_stream)));
+            _player.Init(_waveStream);
         }
+
+        public void Play()
+        {
+            if (_player.PlaybackState != PlaybackState.Playing)
+                _player.Play();
+        }
+
+        public void Pause()
+        {
+            if (_player.PlaybackState == PlaybackState.Playing)
+                _player.Pause();
+        }
+
+        public void Stop()
+        {
+            if (_player.PlaybackState != PlaybackState.Stopped)
+                _player.Stop();
+        }
+
+        public TimeSpan Length => _waveStream.TotalTime;
+        public TimeSpan CurrentTime => _waveStream.CurrentTime;
 
         public override string ToString()
         {
