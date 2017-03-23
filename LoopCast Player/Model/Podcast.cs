@@ -73,8 +73,24 @@ namespace LoopCast_Player.Model
                 _player.Stop();
         }
 
+        public void Reverse(TimeSpan timeToGoBack)
+        {
+            if (_waveStream.CurrentTime < timeToGoBack)
+                _waveStream.CurrentTime = TimeSpan.Zero;
+            else
+                _waveStream.CurrentTime = CurrentTime - timeToGoBack;
+        }
+
+        public void Forward(TimeSpan timeToForward)
+        {
+            if (CurrentTime + timeToForward >= _waveStream.TotalTime)
+                Stop();
+            else
+                _waveStream.CurrentTime = CurrentTime + timeToForward;
+        }
+
         public TimeSpan Length => _waveStream.TotalTime;
-        public TimeSpan CurrentTime => _waveStream.CurrentTime;
+        public TimeSpan CurrentTime => TimeSpan.FromSeconds(Math.Floor(_waveStream.CurrentTime.TotalSeconds));
 
         public override string ToString()
         {

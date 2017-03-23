@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Windows;
+using LoopCast_Player.Model;
 
 namespace LoopCast_Player.Views.Windows
 {
@@ -19,8 +21,9 @@ namespace LoopCast_Player.Views.Windows
 
         private void Add(object sender, RoutedEventArgs e)
         {
-            string url = URL.Text;
-            if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
+            string url = URL.Text.Trim();
+            Uri uri = null;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri) || null == uri)
             {
                 MessageBox.Show("Invalid URL");
             }

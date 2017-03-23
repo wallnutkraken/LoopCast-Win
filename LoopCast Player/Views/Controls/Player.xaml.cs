@@ -1,7 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using LoopCast_Player.Model;
 using LoopCast_Player.Views.Windows;
 
@@ -13,6 +15,9 @@ namespace LoopCast_Player.Views.Controls
     public partial class Player : UserControl
     {
         private Podcast _currentPodcast;
+        private string _length;
+        private DispatcherTimer _elapsedTimer;
+
         public Player()
         {
             InitializeComponent();
@@ -20,12 +25,13 @@ namespace LoopCast_Player.Views.Controls
 
         public void SetPodcast(Podcast podcast)
         {
+            _elapsedTimer?.Stop();
             try
             {
                 podcast?.Stop();
             }
             catch { }
-            Notification notification = new Notification("Downloading episode");
+            FileName.Content = "Loading stream...";
 
             Task t = new Task(() =>
             {
@@ -37,10 +43,15 @@ namespace LoopCast_Player.Views.Controls
             {
                 FileName.Content = podcast.Name;
                 _currentPodcast = podcast;
+                _length = _currentPodcast.Length.ToString(@"hh\:mm\:ss");
 
-                if (!notification.Closed)
-                    notification.Close();
-                _currentPodcast.Play();
+                PlayPause_Click(null, null);
+
+                /* Start timer */
+                _elapsedTimer = new DispatcherTimer();
+                _elapsedTimer.Interval = TimeSpan.FromMilliseconds(500);
+                _elapsedTimer.Tick += UpdatePlayTime;
+                _elapsedTimer.Start();
             });
             t.Start();
         }
@@ -60,7 +71,23 @@ namespace LoopCast_Player.Views.Controls
             else
             {
                 _currentPodcast?.Play();
+                UpdatePlayTime(null, null);
             }
+        }
+
+        private void ForwardTime(object sender, RoutedEventArgs e)
+        {
+            _currentPodcast?.Forward(TimeSpan.FromSeconds(10));
+        }
+
+        private void ReverseTime(object sender, RoutedEventArgs e)
+        {
+            _currentPodcast?.Reverse(TimeSpan.FromSeconds(10));
+        }
+
+        private void UpdatePlayTime(object sender, EventArgs args)
+        {
+            Time.Content = $"{_currentPodcast?.CurrentTime}/{_length}";
         }
     }
 }

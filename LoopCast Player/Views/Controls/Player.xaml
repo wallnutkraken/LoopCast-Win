@@ -26,9 +26,9 @@
             <ProgressBar Grid.Row="0" Margin="10" Height="10"></ProgressBar>
 
             <Grid Grid.Row="1">
-                <Button Name="Rewind" Content="Rewind" Margin="10" HorizontalAlignment="Left" Height="25"></Button>
+                <Button Name="Rewind" Content="Rewind" Margin="10" HorizontalAlignment="Left" Height="25" Click="ReverseTime"></Button>
                 <Button Name="PlayPause" Content="Play/Pause" Margin="10" HorizontalAlignment="Center" Height="25" Click="PlayPause_Click"></Button>
-                <Button Name="Forward" Content="Forward" Margin="10" HorizontalAlignment="Right" Height="25"></Button>
+                <Button Name="Forward" Content="Forward" Margin="10" HorizontalAlignment="Right" Height="25" Click="ForwardTime"></Button>
             </Grid>
         </Grid>
 
@@ -36,6 +36,7 @@
         <Grid Grid.Row="2">
             <Button Name="DecrementFile" Content="Previous" Margin="10" HorizontalAlignment="Left" Height="25"></Button>
             <Button Name="IncrementFile" Content="Next" Margin="10" HorizontalAlignment="Right" Height="25"></Button>
+            <Label Name="Time" Content="00:00:00/00:00:00" HorizontalAlignment="Center"></Label>
         </Grid>
     </Grid>
 </UserControl>
