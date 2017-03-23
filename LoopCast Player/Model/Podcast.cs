@@ -83,7 +83,9 @@ namespace LoopCast_Player.Model
 
         public static explicit operator Podcast(SyndicationItem podcastItem)
         {
-            return new Podcast(podcastItem.Links.First().Uri.OriginalString, podcastItem.Title.Text);
+            return new Podcast(podcastItem.Links
+                .First(u => u.MediaType != null && u.MediaType.StartsWith("audio"))
+                    .Uri.OriginalString, podcastItem.Title.Text);
         }
     }
 }
