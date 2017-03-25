@@ -9,9 +9,9 @@ namespace LoopCast_Player.Model
     {
         public string URL { get; }
         public string Name { get; }
-        private List<Podcast> _podcasts;
+        private List<PodcastInfo> _podcasts;
 
-        public List<Podcast> Podcasts => _podcasts.ToList();
+        public List<PodcastInfo> Podcasts => _podcasts.ToList();
 
         private SyndicationFeed _rssFeed;
 
@@ -23,7 +23,7 @@ namespace LoopCast_Player.Model
             _rssFeed = SyndicationFeed.Load(XmlReader.Create(url));
 
             Name = _rssFeed.Title.Text;
-            _podcasts = _rssFeed.Items.Select(item => (Podcast)item).ToList();
+            _podcasts = _rssFeed.Items.Select(item => (PodcastInfo)item).ToList();
         }
 
         public override string ToString()

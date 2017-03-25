@@ -8,7 +8,7 @@ using NAudio.Wave;
 
 namespace LoopCast_Player.Model
 {
-    public class Podcast
+    public class Podcast : IDisposable
     {
         public string URL { get; }
         public string Name { get; }
@@ -98,11 +98,11 @@ namespace LoopCast_Player.Model
             return Name;
         }
 
-        public static explicit operator Podcast(SyndicationItem podcastItem)
+        public void Dispose()
         {
-            return new Podcast(podcastItem.Links
-                .First(u => u.MediaType != null && u.MediaType.StartsWith("audio"))
-                    .Uri.OriginalString, podcastItem.Title.Text);
+            _stream.Dispose();
+            _waveStream.Dispose();
+            _player.Dispose();
         }
     }
 }

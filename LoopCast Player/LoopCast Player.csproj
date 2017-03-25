@@ -61,6 +61,7 @@
     <Compile Include="Model\Exceptions\FileNotLoadedException.cs" />
     <Compile Include="Model\Feed.cs" />
     <Compile Include="Model\Podcast.cs" />
+    <Compile Include="Model\PodcastInfo.cs" />
     <Compile Include="Views\Controls\Player.xaml.cs">
       <DependentUpon>Player.xaml</DependentUpon>
     </Compile>

@@ -9,21 +9,26 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="PlayerPage">
 
-    <Grid>
+    <Grid Name="Content">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="65"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="40*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
         <!-- Podcast selection -->
         <ComboBox Name="EpisodeSelection" SelectionChanged="EpisodeChanged" Height="25" Margin="10" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top"/>
         <Button Name="ChangePodcast" Grid.Row="0" Grid.Column="1" Margin="10" Content="Change" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ChangePodcast_Click"></Button>
 
-
+        <!-- Player -->
         <Controls:Player x:Name="Player" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"/>
+
+        <!-- Next/Prev podcast -->
+        <Button Grid.ColumnSpan="2" Grid.Row="2" Margin="10" HorizontalAlignment="Left" Content="Previous" Click="PrevPodcast"></Button>
+        <Button Grid.ColumnSpan="2" Grid.Row="2" Margin="10" HorizontalAlignment="Right" Content="Next" Click="NextPodcast"></Button>
     </Grid>
 </Page>

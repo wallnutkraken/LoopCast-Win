@@ -15,6 +15,7 @@ namespace LoopCast_Player.Views.Windows
             _returner = returner;
             _returner.Item = null;
             this.ShowDialog();
+            URL.Focus();
         }
 
         private void Add(object sender, RoutedEventArgs e)

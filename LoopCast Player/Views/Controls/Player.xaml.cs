@@ -10,24 +10,31 @@ namespace LoopCast_Player.Views.Controls
     /// <summary>
     /// Interaction logic for Player.xaml
     /// </summary>
-    public partial class Player : UserControl
+    public partial class Player : UserControl, IDisposable
     {
         private Podcast _currentPodcast;
         private string _length;
         private DispatcherTimer _elapsedTimer;
+
+        private Task _connectPodcastTask;
 
         public Player()
         {
             InitializeComponent();
         }
 
-        public void SetPodcast(Podcast podcast)
+        public void SetPodcast(PodcastInfo podcastDefinition)
         {
+            /* So we can free memory by disposing of it here later (the only reference) */
+            Podcast podcast = new Podcast(podcastDefinition.URL, podcastDefinition.Name);
             _elapsedTimer?.Stop();
             PlayPause.IsEnabled = false;
             try
             {
+                _currentPodcast?.Dispose();
                 _currentPodcast?.Stop();
+
+                _connectPodcastTask.Dispose();
             }
             catch { }
             _currentPodcast = null;
@@ -35,13 +42,13 @@ namespace LoopCast_Player.Views.Controls
 
             FileName.Content = "Loading stream...";
 
-            Task t = new Task(() =>
+            _connectPodcastTask = new Task(() =>
             {
                 podcast.ConnectStream();
                 podcast.StartPlayer();
             });
 
-            t.GetAwaiter().OnCompleted(() =>
+            _connectPodcastTask.GetAwaiter().OnCompleted(() =>
             {
                 FileName.Content = podcast.Name;
                 _currentPodcast = podcast;
@@ -55,10 +62,10 @@ namespace LoopCast_Player.Views.Controls
                 _elapsedTimer.Tick += UpdatePlayTime;
                 _elapsedTimer.Start();
             });
-            t.Start();
+            _connectPodcastTask.Start();
         }
 
-        public Player(Podcast podcast) : this()
+        public Player(PodcastInfo podcast) : this()
         {
             SetPodcast(podcast);
         }
@@ -93,6 +100,16 @@ namespace LoopCast_Player.Views.Controls
                 return;
             Time.Content = $"{_currentPodcast.CurrentTime}/{_length}";
             Elapsed.Value = _currentPodcast.PercentElapsed;
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                _connectPodcastTask.Dispose();
+            }
+            catch { }
+            _currentPodcast?.Dispose();
         }
     }
 }

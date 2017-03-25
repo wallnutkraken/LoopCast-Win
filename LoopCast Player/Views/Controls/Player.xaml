@@ -34,8 +34,6 @@
 
         <!-- Other options -->
         <Grid Grid.Row="2">
-            <Button Name="DecrementFile" Content="Previous" Margin="10" HorizontalAlignment="Left" Height="25"></Button>
-            <Button Name="IncrementFile" Content="Next" Margin="10" HorizontalAlignment="Right" Height="25"></Button>
             <Label Name="Time" Content="00:00:00/00:00:00" HorizontalAlignment="Center"></Label>
         </Grid>
     </Grid>

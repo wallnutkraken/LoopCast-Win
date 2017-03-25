@@ -12,7 +12,7 @@ namespace LoopCast_Player.Views.Pages
     public partial class PlayerPage : Page
     {
         private ObservableCollection<Feed> feeds;
-        private ObservableCollection<Podcast> _podcasts = new ObservableCollection<Podcast>();
+        private ObservableCollection<PodcastInfo> _podcasts = new ObservableCollection<PodcastInfo>();
 
         public PlayerPage()
         {
@@ -41,7 +41,23 @@ namespace LoopCast_Player.Views.Pages
             object selected = (sender as ComboBox)?.SelectedItem;
             if (selected != null)
             {
-                Player.SetPodcast((Podcast)selected);
+                Player.SetPodcast((PodcastInfo)selected);
+            }
+        }
+
+        private void PrevPodcast(object sender, RoutedEventArgs args)
+        {
+            if (EpisodeSelection.SelectedIndex < _podcasts.Count - 1 && EpisodeSelection.SelectedIndex > 0)
+            {
+                EpisodeSelection.SelectedIndex++;
+            }
+        }
+
+        private void NextPodcast(object sender, RoutedEventArgs args)
+        {
+            if (EpisodeSelection.SelectedIndex > 0)
+            {
+                EpisodeSelection.SelectedIndex--;
             }
         }
     }
