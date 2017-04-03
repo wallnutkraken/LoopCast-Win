@@ -47,6 +47,17 @@ namespace LoopCast_Player.Model.SQL
             command.ExecuteNonQuery();
         }
 
+        public static void Remove(Feed feed)
+        {
+            const string removeFeedSQL = "DELETE FROM Feeds WHERE url = @givenUrl";
+
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            command.CommandText = removeFeedSQL;
+            command.Parameters.Add(new SQLiteParameter("@givenUrl", feed.URL));
+
+            command.ExecuteNonQuery();
+        }
+
         public static List<Feed> GetFeeds()
         {
             List<Feed> feeds = new List<Feed>();

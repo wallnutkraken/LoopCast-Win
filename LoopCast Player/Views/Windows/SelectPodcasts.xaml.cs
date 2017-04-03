@@ -26,8 +26,14 @@ namespace LoopCast_Player.Views.Windows
         {
             if (Podcasts.SelectedItems.Count != 0)
             {
+                /* Get actual feed */
+                Feed removableFeed = (Feed) Podcasts.SelectedItem;
+
                 /* Change */
                 _feeds.RemoveAt(Podcasts.SelectedIndex);
+                
+                /* Remove from DB */
+                DB.Remove(removableFeed);
             }
         }
 
