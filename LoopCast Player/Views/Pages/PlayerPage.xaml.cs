@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using LoopCast_Player.Model;
+using LoopCast_Player.Model.SQL;
 using LoopCast_Player.Views.Windows;
 
 namespace LoopCast_Player.Views.Pages
@@ -17,7 +18,7 @@ namespace LoopCast_Player.Views.Pages
         public PlayerPage()
         {
             InitializeComponent();
-            feeds = new ObservableCollection<Feed>();
+            feeds = new ObservableCollection<Feed>(DB.GetFeeds());
 
             EpisodeSelection.ItemsSource = _podcasts;
         }

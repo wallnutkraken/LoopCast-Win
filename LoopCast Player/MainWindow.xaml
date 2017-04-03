@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoopCast_Player"
         mc:Ignorable="d"
-        Title="LoopCast Player for Windows" Height="350" Width="525">
+        Title="LoopCast Player for Windows" Height="350" Width="525"
+        Closing="ClosingWindow">
     <Frame Name="Content" Source="Views/Pages/PlayerPage.xaml">
         
     </Frame>

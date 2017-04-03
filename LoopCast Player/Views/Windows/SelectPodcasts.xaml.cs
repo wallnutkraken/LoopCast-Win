@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using LoopCast_Player.Model;
+using LoopCast_Player.Model.SQL;
 
 namespace LoopCast_Player.Views.Windows
 {
@@ -38,6 +39,7 @@ namespace LoopCast_Player.Views.Windows
             {
                 Feed feed = new Feed(returner.Item);
                 _feeds.Add(feed);
+                DB.AddFeed(feed);
 
                 Podcasts.SelectedIndex = _feeds.Count - 1;
             }

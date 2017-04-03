@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
+using LoopCast_Player.Model.SQL;
 
 namespace LoopCast_Player
 {
@@ -9,7 +11,13 @@ namespace LoopCast_Player
     {
         public MainWindow()
         {
+            DB.Load();
             InitializeComponent();
+        }
+
+        private void ClosingWindow(object sender, CancelEventArgs e)
+        {
+            DB.Disconnect();
         }
     }
 }
